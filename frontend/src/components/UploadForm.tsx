@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Loader2, Upload } from 'lucide-react';
 import { documentApi } from '@/lib/api';
 import { OCREngine, systemApi } from '@/lib/api';
-import { useToast } from '../hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 export function UploadForm({ onUploadComplete }: { onUploadComplete?: () => void }) {
   const [file, setFile] = useState<File | null>(null);
