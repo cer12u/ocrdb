@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Loader2, Upload } from 'lucide-react';
 import { documentApi } from '@/lib/api';
 import { OCREngine, systemApi } from '@/lib/api';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../hooks/use-toast';
 
 export function UploadForm({ onUploadComplete }: { onUploadComplete?: () => void }) {
   const [file, setFile] = useState<File | null>(null);
@@ -19,7 +19,7 @@ export function UploadForm({ onUploadComplete }: { onUploadComplete?: () => void
   const [isLoadingEngines, setIsLoadingEngines] = useState(false);
   const { toast } = useToast();
 
-  useState(() => {
+  useEffect(() => {
     const loadOCREngines = async () => {
       setIsLoadingEngines(true);
       try {

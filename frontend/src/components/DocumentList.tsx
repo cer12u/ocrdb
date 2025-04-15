@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Document, documentApi } from '@/lib/api';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Loader2, FileText, Image, File, Download, RefreshCw, Trash2 } from 'lucide-react';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { OCRStatus } from '@/lib/api';
+import { OCRStatus, searchApi } from '@/lib/api';
 
 export function DocumentList({ 
   folderPath, 
@@ -27,7 +27,7 @@ export function DocumentList({
       setIsLoading(true);
       try {
         if (searchQuery) {
-          const results = await documentApi.searchDocuments(searchQuery);
+          const results = await searchApi.searchDocuments(searchQuery);
           setDocuments(results);
         } else {
           const docs = await documentApi.listDocuments(0, 100, folderPath);
@@ -110,7 +110,7 @@ export function DocumentList({
       case OCRStatus.PROCESSING:
         return <Badge variant="secondary">Processing</Badge>;
       case OCRStatus.COMPLETED:
-        return <Badge variant="success">Completed</Badge>;
+        return <Badge variant="default">Completed</Badge>;
       case OCRStatus.FAILED:
         return <Badge variant="destructive">Failed</Badge>;
       default:
