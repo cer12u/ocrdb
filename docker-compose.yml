@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_storage:/app/storage
+    environment:
+      - STORAGE_TYPE=local
+      - STORAGE_PATH=/app/storage
+      - DEFAULT_OCR_ENGINE=tesseract
+      - MAX_FILE_SIZE=10485760  # 10MB
+      - MAX_ZIP_SIZE=52428800   # 50MB
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://backend:8000
+
+volumes:
+  backend_storage:
